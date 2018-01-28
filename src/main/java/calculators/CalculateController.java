@@ -21,13 +21,13 @@ public class CalculateController {
   private AtomicInteger f2CalculateCount = new AtomicInteger();
   private ApplicationContext context;
 
-  public void startCalculate(String filePath) throws IOException {
+  public void startCalculate(String filePath, int ololo) throws IOException {
     context = new AnnotationConfigApplicationContext(Config.class);
     context.getBean(Config.FILE_READER_BEAN, FileReader.class).parseFile(filePath);
   }
 
   @Async
-  public void sendToCalculateF1(List<Integer> calcArgs, int localCount) {
+  public void sendToCalculateF1(List<Integer> calcArgs) {
     context = new AnnotationConfigApplicationContext(Config.class);
     ICalculate f1Calculator = context.getBean(Config.F1_CACLULATOR_BEAN, F1Calculate.class);
     int f1Result = f1Calculator.calculate(calcArgs.get(0), calcArgs.get(1));
@@ -35,7 +35,7 @@ public class CalculateController {
       // если никаких результатов раньше не было, записываем
       this.localResult = new AtomicInteger(f1Result);
     } else {
-      sendToCalculateF2(f1Result, getAndClearLocalResult(), localCount);
+      sendToCalculateF2(f1Result, getAndClearLocalResult());
     }
     if (lineCount != null && (lineCount - 1) == f2CalculateCount.get()) {
       // количество выполнений f2 должно быть = <кол. строк в файле> - 1
@@ -43,7 +43,7 @@ public class CalculateController {
     }
   }
 
-  public void sendToCalculateF2(int f1Result, int f1_2, int localCount) {
+  public void sendToCalculateF2(int f1Result, int f1_2) {
     // отправляем на вычисление f2
     f2CalculateCount.incrementAndGet();
     context = new AnnotationConfigApplicationContext(Config.class);
@@ -52,7 +52,7 @@ public class CalculateController {
     if (this.localResult == null) {
       this.localResult = new AtomicInteger(f2Result);
     } else {
-      sendToCalculateF2(f2Result, getAndClearLocalResult(), --localCount);
+      sendToCalculateF2(f2Result, getAndClearLocalResult());
     }
   }
 

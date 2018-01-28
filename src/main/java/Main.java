@@ -15,6 +15,6 @@ public class Main {
   public static void main(String[] args) throws IOException {
     ApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
     CalculateController controller = context.getBean(Config.CALCULATE_CONTROLLER_BEAN, CalculateController.class);
-    controller.startCalculate("test_file.txt");
+    controller.startCalculate("test_file.txt", 0);
   }
 }

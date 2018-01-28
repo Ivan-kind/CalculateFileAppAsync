@@ -1,5 +1,6 @@
 package config;
 
+import Utils.Logger;
 import calculators.CalculateController;
 import calculators.F1Calculate;
 import calculators.F2Calculate;
@@ -8,6 +9,7 @@ import fileReader.FileReader;
 import fileReader.IFileReader;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -20,12 +22,19 @@ import java.util.concurrent.Executor;
  */
 @Configuration
 @EnableAsync
+@EnableAspectJAutoProxy
 public class Config implements AsyncConfigurer {
 
   public static final String F1_CACLULATOR_BEAN = "f1Caclulator";
   public static final String F2_CACLULATOR_BEAN = "f2Caclulator";
   public static final String CALCULATE_CONTROLLER_BEAN = "calculateController";
   public static final String FILE_READER_BEAN = "fileReader";
+  public static final String LOGGER_BEAN = "logger";
+
+  @Bean(name = LOGGER_BEAN)
+  public Logger getLogger() {
+    return new Logger();
+  }
 
   @Bean(name = F1_CACLULATOR_BEAN)
   public ICalculate getF1Calculate() {

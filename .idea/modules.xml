@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CalculateFileAppAsync.iml" filepath="$PROJECT_DIR$/CalculateFileAppAsync.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CalculateFileApp.iml" filepath="$PROJECT_DIR$/CalculateFileApp.iml" />
     </modules>
   </component>
 </project>

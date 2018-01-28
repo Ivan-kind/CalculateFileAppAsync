@@ -29,7 +29,8 @@ public class FileReader implements IFileReader {
       Arrays.stream(oneFileLine.split(" "))
               .forEach(oneArg -> fileArgs.add(Integer.parseInt(oneArg)));
       // каждую строку отправляем сразу на вычисление
-      controller.sendToCalculateF1(fileArgs, lineCount++);
+      controller.sendToCalculateF1(fileArgs);
+      lineCount++;
     }
     // отправляем общее количество строк в файле
     controller.setLineCount(lineCount);
